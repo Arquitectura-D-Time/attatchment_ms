@@ -14,4 +14,4 @@ services:
     container_name: attatchment_db
     image: mongo
     ports:
-      - "3006:27017"
+      - "27017:27017"
