@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-mongoose.connect('mongodb://localhost/attatchment_db', {
+mongoose.connect('mongodb://10.128.0.3/attatchment_db', {
     useNewUrlParser: true
 })
     .then(db => console.log('Db is connected'))

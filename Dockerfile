@@ -1,6 +1,6 @@
 From node:12
 
-WORKDIR /index
+WORKDIR /src
 
 COPY package*.json ./
 
