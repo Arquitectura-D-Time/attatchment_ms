@@ -5,7 +5,7 @@ const { unlink } = require('fs-extra');
 const router = Router();
 
 // Models
-const Image = require('../models/Image');
+const Image = require('../models/image');
 
 router.get('/',  (req, res) => {
     /*
