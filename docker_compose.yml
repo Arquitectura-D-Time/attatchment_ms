@@ -1,0 +1,17 @@
+version: "1.0"
+services:
+  app:
+    container_name: attatchment_ms
+    restart: always
+    build: ./
+    ports:
+      - "5006:3000"
+    volumes:
+      - .:/app
+    links:
+      - mongo
+  mongo:
+    container_name: attatchment_db
+    image: mongo
+    ports:
+      - "3006:27017"
