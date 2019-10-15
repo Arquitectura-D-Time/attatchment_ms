@@ -11,7 +11,7 @@ router.get('/',  (req, res) => {
     /*
     const images = await Image.find();
     res.render('index', { images });*/
-    res.send('index page asfdjasfasjfasf')
+    res.send('Este es el microservicio que manejara tus archivos adjuntos: ')
 });
 
 router.get('/upload', (req, res) => {
