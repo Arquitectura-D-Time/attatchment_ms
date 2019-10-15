@@ -13,7 +13,7 @@ require('./database');
 // settings
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
-app.set('port', process.env.PORT || 5006);
+const p = app.set('port', process.env.PORT || 5006);
 
 // middlewares
 app.use(morgan('dev'));
@@ -40,6 +40,6 @@ app.use(require('./routes/index'));
 app.use(express.static(path.join(__dirname, 'public')));
 
 // start
-app.listen(port, () => {
+app.listen(5006, () => {
     console.log(`Server on port ${app.get('port')}`);
 });
