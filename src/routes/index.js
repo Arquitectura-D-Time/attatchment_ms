@@ -8,18 +8,18 @@ const router = Router();
 const Image = require('../models/image');
 const PDF = require('../models/pdf');
 
-router.get('/',  (req, res) => {
+router.get('/image',  (req, res) => {
     /*
     const images = await Image.find();
     res.render('index', { images });*/
     res.send('Este es el microservicio que manejara tus archivos adjuntos: ')
 });
 
-router.get('/upload', (req, res) => {
+router.get('/image/upload', (req, res) => {
     res.send('El archivo fue cargado satisfactoriamente');
 });
 
-router.post('/:id/certificado', async (req, res) => {
+router.post('pdf/:id/certificado', async (req, res) => {
     const { id } = req.params;
     const pdf = new PDF();
     pdf.id_owner = id;
@@ -34,7 +34,7 @@ router.post('/:id/certificado', async (req, res) => {
     res.redirect('/');
 });
 
-router.post('/:id/foto', async (req, res) => {
+router.post('image/:id/foto', async (req, res) => {
     const { id } = req.params;
     const image = new Image();
     image.id_owner = id;
