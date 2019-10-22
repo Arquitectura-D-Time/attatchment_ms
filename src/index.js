@@ -40,6 +40,6 @@ app.use(require('./routes/index'));
 app.use(express.static(path.join(__dirname, 'public')));
 
 // start
-app.listen(5006, () => {
+app.listen(3000, () => {
     console.log(`Server on port ${app.get('port')}`);
 });
