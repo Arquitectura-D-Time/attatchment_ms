@@ -1,7 +1,8 @@
 const mongoose = require('mongoose');
 
-mongoose.connect('mongodb://10.128.0.2/attatchment_db', {
-    useNewUrlParser: true
+mongoose.connect('mongodb://localhost/attatchment_db', {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
 })
     .then(db => console.log('Db is connected'))
     .catch(err => console.log(err));

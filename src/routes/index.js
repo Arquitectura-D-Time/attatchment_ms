@@ -8,6 +8,15 @@ const router = Router();
 const Image = require('../models/image');
 const PDF = require('../models/pdf');
 
+const cloudinary = require('cloudinary');
+
+cloudinary.config({
+    cloud_name:'dmp9ifam8',
+    api_key: '739695551696556',
+    api_secret: 'uP9QEL4naoe0Q1S-r2UahFzcF_Q'
+})
+const fs = require('fs-extra');
+
 router.get('/image',  (req, res) => {
     /*
     const images = await Image.find();
@@ -15,57 +24,38 @@ router.get('/image',  (req, res) => {
     res.send('Este es el microservicio que manejara tus archivos adjuntos: ')
 });
 
-router.get('/image/upload', (req, res) => {
-    res.send('El archivo fue cargado satisfactoriamente');
-});
-
-router.post('pdf/:id/certificado', async (req, res) => {
+router.post('/:id/foto', async (req, res) => {
     const { id } = req.params;
-    const pdf = new PDF();
-    pdf.id_owner = id;
-    pdf.tipo = 0;
-    pdf.filename = req.file.filename;
-    pdf.path = '/img/uploads/' + req.file.filename;
-    pdf.originalname = req.file.originalname;
-    pdf.mimetype = req.file.mimetype;
-    pdf.size = req.file.size;
-
-    await pdf.save();
-    res.redirect('/');
-});
-
-router.post('image/:id/foto', async (req, res) => {
-    const { id } = req.params;
+    console.log('Hola')
+    console.log(req.file);
+    const result =await cloudinary.v2.uploader.upload(req.file.path);
+    console.log(result);
     const image = new Image();
     image.id_owner = id;
-    image.tipo = 1;
-    image.filename = req.file.filename;
-    image.path = '/img/uploads/' + req.file.filename;
+    image.url = result.url;
+    image.public_id = result.public_id;
     image.originalname = req.file.originalname;
-    image.mimetype = req.file.mimetype;
-    image.size = req.file.size;
-
     await image.save();
-    res.redirect('/');
+    await fs.unlink(req.file.path);
+    res.send('recibido');
 });
 
 // mostrar imagen
 router.get('/image/:id', async (req, res) => {
     const { id } = req.params;
     const image = await Image.findOne({id_owner: id}).exec();
-    res.send('name: '+  image.originalname +"id: "+image.path);
+    res.json({ name:  image.originalname, url:image.url})
+
 });
-router.get('/documento/:id', async (req, res) => {
-    const { id } = req.params;
-    const pdf = await PDF.findOne({id_owner: id}).exec();
-    res.send('name: '+  pdf.originalname +"id: "+pdf.path);
-});
+
 
 router.get('/image/:id/delete', async (req, res) => {
     const { id } = req.params;
-    const imageDeleted = await Image.findByIdAndDelete(id);
-    await unlink(path.resolve('./src/public' + imageDeleted.path));
-    res.redirect('/');
+    const image = await Image.findOne({id_owner: id}).exec();
+    const idm = image._id;
+    const imageDeleted = await Image.findByIdAndDelete(idm);
+    const result = await cloudinary.v2.uploader.destroy(imageDeleted.public_id);
+    res.send('eliminada');
 });
 
 module.exports = router;
