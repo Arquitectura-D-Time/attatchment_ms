@@ -44,7 +44,7 @@ router.post('/:id/foto', async (req, res) => {
 router.get('/image/:id', async (req, res) => {
     const { id } = req.params;
     const image = await Image.findOne({id_owner: id}).exec();
-    res.json({ name:  image.originalname, url:image.url})
+    res.json({ urlimg: image.url})
 
 });
 
