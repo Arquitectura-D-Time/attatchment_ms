@@ -24,6 +24,7 @@ router.get('/image',  (req, res) => {
     res.send('Este es el microservicio que manejara tus archivos adjuntos: ')
 });
 
+//Cargar imagen
 router.post('/:id/foto', async (req, res) => {
     const { id } = req.params;
     console.log('Hola')
